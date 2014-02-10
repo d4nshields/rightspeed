@@ -57,3 +57,4 @@
           }
     });
     updateVideoElement( 1.0);
+    
