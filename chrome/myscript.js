@@ -12,7 +12,9 @@
 	}
     }
     function updateVideoElement( rate) {
-        document.getElementsByTagName("video")[0].playbackRate = rate;
+        if( "undefined" !== typeof document.getElementsByTagName("video")[0]) {
+          document.getElementsByTagName("video")[0].playbackRate = rate;
+        }
         $('#spdr #spdr-amount').html(  "<h6>"+rate+"</h6>")
         $('#spdr #spdr-amount').css( {
 		'position': 'absolute',
@@ -57,3 +59,5 @@
           }
     });
     updateVideoElement( 1.0);
+    $("#spdr #spdr-slider").slider( "value", 1.0);
+
