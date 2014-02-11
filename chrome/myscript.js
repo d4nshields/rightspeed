@@ -4,7 +4,7 @@
 	if( $("#spdr").length < 1) {
           $("<div id='spdr' style='width:41px;height:510px;position:absolute;top:15px;'>\
             <div id='spdr-col1' style='color:black;float:left;'>\
-  	    <span id='spdr-amount'><h6>1.00</h6></span><br/>\
+            <span id='spdr-amount'><h6>1.00</h6></span><br/>\
             </div>\
             <div id='spdr-slider' style='float:right;height:510px;'></div>\
             <button id='spdr-reset' style='background-color: #999999;'>RESET</button>\
@@ -15,7 +15,7 @@
         if( "undefined" !== typeof document.getElementsByTagName("video")[0]) {
           document.getElementsByTagName("video")[0].playbackRate = rate;
         }
-        $('#spdr #spdr-amount').html(  "<h6>"+rate+"</h6>")
+        $('#spdr #spdr-amount').html(  "<h6>"+rate+"</h6>");
         $('#spdr #spdr-amount').css( {
 		'position': 'absolute',
 		'bottom': $( '#spdr .ui-slider-handle').css('bottom')
