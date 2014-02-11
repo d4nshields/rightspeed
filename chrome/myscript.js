@@ -1,4 +1,4 @@
-
+gjfds;lgkjfgreset
     var spdrPosID;
     function setupSPDR() {
 	if( $("#spdr").length < 1) {
