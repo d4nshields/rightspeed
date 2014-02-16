@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "content_scripts": [{
-      "matches": ["http://*.youtube.com/*"],
+      "matches": ["*://*.youtube.com/*"],
       "css": ["jquery-ui.css"],
       "js": ["jquery.min.js", "jquery-ui.js", "myscript.js"]
   }],
@@ -20,5 +20,7 @@
   },
   "permissions": [
     "tabs"
-  ]
+  ],
+  "web_accessible_resources": [
+      "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js"]
 }
