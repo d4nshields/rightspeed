@@ -5,6 +5,9 @@
   "description": "This extension provides a basic slider that speeds up or slows down the HTML5 YouTube video player.",
   "version": "1.0",
 
+  "icons": {
+      "128": "stopwatch-small-128.png"
+  },
   "content_scripts": [{
       "matches": ["*://*.youtube.com/*"],
       "css": ["jquery-ui.css"],
@@ -22,5 +25,5 @@
     "tabs"
   ],
   "web_accessible_resources": [
-      "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js"]
+      "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png"]
 }
