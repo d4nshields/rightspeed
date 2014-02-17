@@ -1,5 +1,6 @@
 var preferences = {
-    'isActive': true
+    'isActive': true,
+    'playbackRate': 1.0
 };
 var MIN = 0.5,
     MAX = 4.0;
@@ -81,6 +82,7 @@ function spdrPositioner() {
         return;
     }
     $("#spdr").css("left", (document.getElementById("player-api").getBoundingClientRect().left - 60) + 'px');
+    $("#spdr #spdr-slider").slider("value", document.getElementsByTagName('video')[0].playbackRate);
 }
 
 function spdrPositionerScheduler() {
