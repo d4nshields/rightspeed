@@ -54,8 +54,7 @@ function setupSPDR() {
             </div>\
             <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
             <div class='spdr-buttons' style='position:absolute;top:510px;left:1px;height:20px;width:55px;'>\
-             <button id='spdr-help' style='float:left;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;' alt='alt text' title='title text'>?</button>\
-             <button id='spdr-reset' style='float:right;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+             <button id='spdr-reset' style='position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
             </div>\
           </div>").insertBefore("#player-api");
         // load the image(s)
@@ -125,6 +124,8 @@ function getCookie(cname)
 }
 
 $(function() {
+
+    getCookie( 'PREF')
 
     if ($('video').length < 1) {
         preferences['isActive'] = false;
