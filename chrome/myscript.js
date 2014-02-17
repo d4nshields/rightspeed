@@ -10,6 +10,11 @@ style.rel = 'stylesheet';
 style.type = 'text/css';
 style.href = chrome.extension.getURL('jquery-ui.css');
 (document.head||document.documentElement).appendChild(style);
+var style = document.createElement('link');
+style.rel = 'stylesheet';
+style.type = 'text/css';
+style.href = chrome.extension.getURL('spdr-styles.css');
+(document.head||document.documentElement).appendChild(style);
 
 
 if ("undefined" !== typeof chrome) {
@@ -82,7 +87,11 @@ function spdrPositioner() {
         return;
     }
     $("#spdr").css("left", (document.getElementById("player-api").getBoundingClientRect().left - 60) + 'px');
-    $("#spdr #spdr-slider").slider("value", document.getElementsByTagName('video')[0].playbackRate);
+    if( preferences['isActive']) {
+      $("#spdr #spdr-slider").slider("value", document.getElementsByTagName('video')[0].playbackRate);
+    } else {
+      $("#spdr #spdr-slider").slider("value", 1.0);
+    }
 }
 
 function spdrPositionerScheduler() {
@@ -96,21 +105,6 @@ $(function() {
 
     if ($('video').length < 1) {
         preferences['isActive'] = false;
-        $("<div><h3>No HTML5 player element detected!</h3><p>You must set up Youtube<br> to use the HTML5 player.<br>Visit: <a href='http://youtube.com/html5'>Youtube html5 page.</a></div>").dialog({
-            "title": "HTML5 video Element Not Found",
-            "position": {
-                my: "left+10 top+10",
-                at: "left top",
-                of: window
-            },
-            "buttons": [{
-                text: "Dismiss",
-                click: function() {
-                    $(this).dialog("close");
-                }
-            }]
-        });
-        return;
     }
     setupSPDR();
     $(window).resize(spdrPositionerScheduler);
@@ -133,7 +127,12 @@ $(function() {
             });
         }
     });
-    var pbRate = document.getElementsByTagName('video')[0].playbackRate;
-    updateVideoElement(pbRate);
-    $("#spdr #spdr-slider").slider("value", pbRate);
+    if( !preferences['isActive']) {
+      $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
+      $('#spdr #spdr-slider').slider( "disable");
+    } else {
+      var pbRate = document.getElementsByTagName('video')[0].playbackRate;
+      updateVideoElement(pbRate);
+      $("#spdr #spdr-slider").slider("value", pbRate);
+    }
 });
