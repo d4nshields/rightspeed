@@ -1,6 +1,6 @@
 var preferences = {
     'isActive': true,
-    'html5pref': false
+    'html5enabled': false
 };
 var MIN = 0.5,
     MAX = 4.0;
@@ -125,7 +125,22 @@ function getCookie(cname)
 
 $(function() {
 
-    getCookie( 'PREF')
+    var html5enabled = false;
+    var k = getCookie( 'PREF');
+    console.log( 'k='+k);
+    var prefs = ("undefined" !== typeof k ? k.split( '&') : []);
+
+    console.log( 'prefs='+prefs.length);
+
+    for( var i=0; i<prefs.length; i++) {
+      var pref = prefs[i];
+      console.log( 'pref='+pref);
+      if( pref.indexOf( 'f2=') == 0) {
+        html5enabled = (pref.substr( 3, 1) & 4);
+        console.log( 'html5enabled='+html5enabled);
+      }
+    }
+    preferences['html5enabled'] = html5enabled;
 
     if ($('video').length < 1) {
         preferences['isActive'] = false;
