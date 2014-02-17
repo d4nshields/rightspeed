@@ -133,6 +133,7 @@ $(function() {
             });
         }
     });
-    updateVideoElement(1.0);
-    $("#spdr #spdr-slider").slider("value", 1.0);
+    var pbRate = document.getElementsByTagName('video')[0].playbackRate;
+    updateVideoElement(pbRate);
+    $("#spdr #spdr-slider").slider("value", pbRate);
 });
