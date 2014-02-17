@@ -25,5 +25,6 @@
     "tabs"
   ],
   "web_accessible_resources": [
-      "jquery-ui.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png"]
+    "images/ui-bg_glass_100_f6f6f6_1x400.png",
+      "jquery-ui.css", "spdr-styles.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png"]
 }

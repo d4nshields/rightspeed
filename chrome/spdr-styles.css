@@ -1,1 +1,6 @@
 /* CSS overrides */
+.ui-dialog-buttonset {
+  float:initial !important;
+  text-align: center;
+}
+

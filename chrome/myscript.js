@@ -1,6 +1,6 @@
 var preferences = {
     'isActive': true,
-    'playbackRate': 1.0
+    'html5pref': false
 };
 var MIN = 0.5,
     MAX = 4.0;
@@ -53,7 +53,10 @@ function setupSPDR() {
             <div id='spdr-col1' style='color:black;float:left;height:100%'>\
             </div>\
             <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
-            <button id='spdr-reset' style='position:absolute;top:510px;left:6px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+            <div class='spdr-buttons' style='position:absolute;top:510px;left:1px;height:20px;width:55px;'>\
+             <button id='spdr-help' style='float:left;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;' alt='alt text' title='title text'>?</button>\
+             <button id='spdr-reset' style='float:right;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+            </div>\
           </div>").insertBefore("#player-api");
         // load the image(s)
         var imgURL = chrome.extension.getURL("stopwatch-top.png");
@@ -101,6 +104,26 @@ function spdrPositionerScheduler() {
     spdrPosID = window.setInterval(spdrPositioner, 500);
 }
 
+function setCookie(cname,cvalue,exdays)
+{
+  var d = new Date();
+  d.setTime(d.getTime()+(exdays*24*60*60*1000));
+  var expires = "expires="+d.toGMTString();
+  document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname)
+{
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++) 
+      {
+          var c = ca[i].trim();
+            if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+      }
+  return "";
+}
+
 $(function() {
 
     if ($('video').length < 1) {
@@ -136,3 +159,4 @@ $(function() {
       $("#spdr #spdr-slider").slider("value", pbRate);
     }
 });
+
