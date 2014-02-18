@@ -27,17 +27,24 @@ $( function() {
     getPreference( 'isActive', function( any) {
       if( "undefined" !== typeof any) {
         $('input[name=isActive]').prop( 'checked', any.isActive);
+        $('label[for=isActive]').removeClass( 'disabled');
         if( !any.html5enabled) {
-          $('#html5enabled-message').html( "<blockquote>\
+          $('#html5enabled-message').html( "<blockquote style='text-align:justify;'>\
           ATTENTION: You have not setup the HTML5 player in YouTube.\
-          Not all videos will work properly with the SpeederUpper add-on.   Please visit <a href='http://youtube.com/html5' window='_blank'>\
+          Not all videos will work properly with the SpeederUpper add-on.   Please visit <a id='spdr-popup-youtube' href='http://youtube.com/html5' window='_blank'>\
           HTML5 Preferences</a> and be sure to click on 'Request the HTML5 player'.\
           </blockquote>");
+          $('#spdr-popup-youtube').click( function() {
+            chrome.tabs.create({url: $(this).attr('href')});
+          });
         } else {
           $('#html5enabled-message').html( "<blockquote>\
             <b>HTML5 Player is configured.</b>\
             </blockquote>");
         }
+      } else {
+        $('input[name=isActive]').prop( 'disabled', true);
+        $('label[for=isActive]').addClass( 'disabled');
       }
     })
     $('input[name=isActive]').change( checkboxChanged);    
