@@ -18,9 +18,8 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 
 
 if ("undefined" !== typeof chrome) {
-    chrome.runtime.onMessage.addListener(
-
-    function(message, sender, sendResponse) {
+  function setupListener() {
+    chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
         switch (message.call) {
         case 'set':
             for (var k in message.prefs)
@@ -39,7 +38,10 @@ if ("undefined" !== typeof chrome) {
         else {
             $('#spdr').css('display', 'block');
         }
+        setupListener();
     });
+  }
+  setupListener();
 }
 
 var spdrPosID;
@@ -127,17 +129,13 @@ $(function() {
 
     var html5enabled = false;
     var k = getCookie( 'PREF');
-    console.log( 'k='+k);
     var prefs = ("undefined" !== typeof k ? k.split( '&') : []);
 
-    console.log( 'prefs='+prefs.length);
 
     for( var i=0; i<prefs.length; i++) {
       var pref = prefs[i];
-      console.log( 'pref='+pref);
       if( pref.indexOf( 'f2=') == 0) {
         html5enabled = (pref.substr( 3, 1) & 4);
-        console.log( 'html5enabled='+html5enabled);
       }
     }
     preferences['html5enabled'] = html5enabled;
