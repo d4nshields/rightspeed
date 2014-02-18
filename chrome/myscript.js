@@ -18,6 +18,9 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 
 
 if ("undefined" !== typeof chrome) {
+    chrome.app.runtime.onLaunched.addListener( function() {
+        chrome.app.window.create( 'index.html');
+    })
     chrome.runtime.onMessage.addListener(
 
     function(message, sender, sendResponse) {
