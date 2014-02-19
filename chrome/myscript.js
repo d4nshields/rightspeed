@@ -38,7 +38,7 @@ if ("undefined" !== typeof chrome) {
         else {
             $('#spdr').css('display', 'block');
         }
-        setupListener();
+//        setupListener();
     });
   }
   setupListener();
