@@ -86,15 +86,20 @@ function updateVideoElement(rate) {
 }
 
 function spdrPositioner() {
-    var playerApiPosition = document.getElementById("player-api").getBoundingClientRect().left;
-    if (playerApiPosition < 0) {
-        return;
-    }
-    $("#spdr").css("left", (document.getElementById("player-api").getBoundingClientRect().left - 60) + 'px');
-    if( preferences['isActive']) {
-      $("#spdr #spdr-slider").slider("value", document.getElementsByTagName('video')[0].playbackRate);
+    preferences['isActive']  = ($('video').length > 0);
+    if( !preferences['isActive']) {
+      if( $('#spdr-overlay').length < 1)
+        $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
+      $('#spdr #spdr-slider').slider( "disable");
     } else {
-      $("#spdr #spdr-slider").slider("value", 1.0);
+      $('#spdr-overlay').remove();
+      $('#spdr #spdr-slider').slider( "enable");
+      var playerApiPosition = document.getElementById("player-api").getBoundingClientRect().left;
+      if (playerApiPosition < 0) {
+          return;
+      }
+      $("#spdr").css("left", (document.getElementById("player-api").getBoundingClientRect().left - 60) + 'px');
+      $("#spdr #spdr-slider").slider("value", document.getElementsByTagName('video')[0].playbackRate);
     }
 }
 
@@ -140,9 +145,8 @@ $(function() {
     }
     preferences['html5enabled'] = html5enabled;
 
-    if ($('video').length < 1) {
-        preferences['isActive'] = false;
-    }
+    preferences['isActive']  = ($('video').length < 1);
+
     setupSPDR();
     $(window).resize(spdrPositionerScheduler);
     spdrPositionerScheduler();
@@ -164,13 +168,8 @@ $(function() {
             });
         }
     });
-    if( !preferences['isActive']) {
-      $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
-      $('#spdr #spdr-slider').slider( "disable");
-    } else {
-      var pbRate = document.getElementsByTagName('video')[0].playbackRate;
-      updateVideoElement(pbRate);
-      $("#spdr #spdr-slider").slider("value", pbRate);
-    }
+    //var pbRate = document.getElementsByTagName('video')[0].playbackRate;
+    //updateVideoElement(pbRate);
+    //$("#spdr #spdr-slider").slider("value", pbRate);
 });
 
