@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "YouTube Playback Speeder-Upper",
-  "description": "Speed up or slow down any YouTube video which can be played in the HTML5 player.  Customize your viewing experience to save time, or to simply enhance your viewing pleasure.",
-  "version": "0.0.0.1",
+  "name": "YouTube™ RightSpeed",
+  "short_name": "YTRightSpeed",
+  "description": "Slower or faster, watch Youtube videos at exactly the 'right speed'.",
+  "version": "0.0.0.3",
 
   "icons": {
       "128": "stopwatch-small-128.png"
@@ -18,7 +19,7 @@
       "19": "stopwatch-small-128.png",
       "38": "stopwatch-small-128.png"
     },
-    "default_title": "YouTube Speeder-Upper",
+    "default_title": "YouTube™ RightSpeed",
     "default_popup": "popup.html"
   },
   "permissions": [
