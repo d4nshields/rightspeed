@@ -1,4 +1,4 @@
-speederupper
-============
+YouTube RightSpeed
+==================
 
-YouTube Speeder Upper extension for Chrome
+YouTube RightSpeed extension for Chrome
