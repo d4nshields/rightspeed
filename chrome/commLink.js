@@ -1,18 +1,19 @@
-function setPreference( pref) {
+function setPreference( pref, runFunc) {
     chrome.tabs.getSelected( null, function( tab) {
-        chrome.tabs.sendMessage( tab.id, {
-            'call': 'set',
-            'prefs': pref
-            });
-    })
+      chrome.storage.local.set( pref);
+      if( "undefined" !== typeof pref.site) {
+        chrome.storage.local.set( sites[ pref.site]);
+      }
+      if( "undefined" !== typeof runFunc)
+        runFunc();
+    });
 }
 
-function getPreference( prefId, runFunc) {
+function getPreference( runFunc) {
     chrome.tabs.getSelected( null, function( tab) {
-        chrome.tabs.sendMessage( tab.id, {
-            'call': 'get',
-            'prefId': prefId
-            }, runFunc);
+      chrome.storage.local.get( null, function( items) {
+        runFunc( items);
+      });
     })
 }
 
@@ -24,7 +25,7 @@ function checkboxChanged() {
 
 $( function() {
     console.log( "running init()");
-    getPreference( 'isActive', function( any) {
+    getPreference( function( any) {
       if( "undefined" !== typeof any) {
         $('input[name=isActive]').prop( 'checked', any.isActive);
         $('label[for=isActive]').removeClass( 'disabled');

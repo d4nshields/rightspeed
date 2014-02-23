@@ -12,7 +12,8 @@
   "content_scripts": [{
       "matches": ["*://*.youtube.com/*"],
       "js": ["jquery.min.js", "jquery-ui.js", "myscript.js"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "all_frames": true
   }],
   "browser_action": {
     "default_icon": {
@@ -23,10 +24,11 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs"
+    "tabs", "storage", "cookies"
   ],
   "web_accessible_resources": [
-      "jquery-ui.css", "spdr-styles.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png"
+      "jquery-ui.css", "spdr-styles.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png",
+      "images/*"
       ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
