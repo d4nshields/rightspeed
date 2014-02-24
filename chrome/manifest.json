@@ -9,6 +9,9 @@
   "icons": {
       "128": "stopwatch-small-128.png"
   },
+  "background": {
+    "scripts": ["background.js"]
+  },
   "content_scripts": [{
       "matches": ["*://*.youtube.com/*"],
       "js": ["jquery.min.js", "jquery-ui.js", "myscript.js"],
@@ -24,7 +27,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs", "storage", "cookies"
+    "tabs", "storage", "cookies", "*://*.youtube.com/*"
   ],
   "web_accessible_resources": [
       "jquery-ui.css", "spdr-styles.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", "stopwatch-top.png",

@@ -157,24 +157,26 @@ function getCookie(cname)
 $(function() {
 
   var html5enabled = false;
-  var k = getCookie( 'PREF');
-  var prefs = ("undefined" != typeof k ? k.split( '&') : []);
+  chrome.extension.sendRequest( "getPREF", function( c) {
+    var k = c[0].value;
+    var prefs = ("undefined" != typeof k ? k.split( '&') : []);
 
-  getPreferences( function( p) {
-    for( var i=0; i<prefs.length; i++) {
-      var pref = prefs[i];
-      if( pref.indexOf( 'f2=') == 0) {
-        html5enabled = (pref.substr( 3, 1) & 4);
+    getPreferences( function( p) {
+      for( var i=0; i<prefs.length; i++) {
+        var pref = prefs[i];
+        if( pref.indexOf( 'f2=') == 0) {
+          html5enabled = (pref.substr( 3, 1) & 4);
+        }
       }
-    }
-    p['html5enabled'] = html5enabled;
+      p['html5enabled'] = html5enabled;
 
-    p['isActive']  = ($('video').length > 0);
+      p['isActive']  = ($('video').length > 0);
 
-    setPreference( p, function() {
-      setupSPDR();
-      $(window).resize(spdrPositionerScheduler);
-      spdrPositionerScheduler();
+      setPreference( p, function() {
+        setupSPDR();
+        $(window).resize(spdrPositionerScheduler);
+        spdrPositionerScheduler();
+      });
     });
   });
 
