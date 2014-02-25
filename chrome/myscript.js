@@ -100,29 +100,32 @@ function updateVideoElement(rate) {
 }
 
 function spdrPositioner() {
-  setPreference( {
-    'isActive': ($('.html5-video-container').length > 0)
-  }, function() {
-    getPreferences( function( prefs) {
-      if( $('#spdr').length < 1) {
-        setupSPDR();
-      }
-      if( $('video').length > 0) {
-        $('#spdr-overlay').remove();
-        $('#spdr-slider').slider( "enable");
-        var playerApiPosition = $("#player-api").offset().left;
-        if (playerApiPosition < 0) {
-            return;
+  $( function() {
+    var numVideoElems = $('video').length;
+    setPreference( {
+      'isActive': (numVideoElems > 0)
+    }, function() {
+      getPreferences( function( prefs) {
+        if( $('#spdr').length < 1) {
+          setupSPDR();
         }
-        var left = $("#player-api").offset().left - 60;
-        if( $('#spdr').offset().left !== left)
-          $("#spdr").css("left", left + 'px');
-        $("#spdr-slider").slider("value", $('video')[0].playbackRate);
-      } else {
-        if( $('#spdr-overlay').length < 1)
-          $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
-        $('#spdr-slider').slider( "disable");
-      }
+        if( $('video').length > 0) {
+          $('#spdr-overlay').remove();
+          $('#spdr-slider').slider( "enable");
+          var playerApiPosition = $("#player-api").offset().left;
+          if (playerApiPosition < 0) {
+              return;
+          }
+          var left = $("#player-api").offset().left - 60;
+          if( $('#spdr').offset().left !== left)
+            $("#spdr").css("left", left + 'px');
+          $("#spdr-slider").slider("value", $('video')[0].playbackRate);
+        } else {
+          if( $('#spdr-overlay').length < 1)
+            $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
+          $('#spdr-slider').slider( "disable");
+        }
+      });
     });
   });
 }
