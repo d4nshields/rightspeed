@@ -101,7 +101,7 @@ function updateVideoElement(rate) {
 
 function spdrPositioner() {
   setPreference( {
-    'isActive': ($('video').length > 0)
+    'isActive': ($('.html5-video-container').length > 0)
   }, function() {
     getPreferences( function( prefs) {
       if( $('#spdr').length < 1) {
@@ -134,26 +134,6 @@ function spdrPositionerScheduler() {
     spdrPosID = window.setInterval(spdrPositioner, 500);
 }
 
-function setCookie(cname,cvalue,exdays)
-{
-  var d = new Date();
-  d.setTime(d.getTime()+(exdays*24*60*60*1000));
-  var expires = "expires="+d.toGMTString();
-  document.cookie = cname + "=" + cvalue + "; " + expires;
-}
-
-function getCookie(cname)
-{
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0; i<ca.length; i++) 
-      {
-          var c = ca[i].trim();
-            if (c.indexOf(name)==0) return c.substring(name.length,c.length);
-      }
-  return "";
-}
-
 $(function() {
 
   var html5enabled = false;
@@ -170,7 +150,7 @@ $(function() {
       }
       p['html5enabled'] = html5enabled;
 
-      p['isActive']  = ($('video').length > 0);
+      p['isActive']  = ($('.html5-video-container').length > 0);
 
       setPreference( p, function() {
         setupSPDR();
