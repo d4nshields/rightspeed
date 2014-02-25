@@ -43,6 +43,10 @@ var spdrPosID;
 function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
+      var defaultSpeed = 1.0;
+      if( $('video').length > 0) {
+        defaultSpeed = $('video')[0].playbackRate;
+      }
       $("<div id='spdr' style='width:49px;height:510px;position:absolute;top:15px;\
         background-color: rgba( 200, 200, 200, 0.5);z-index:1999999999;\
         border:1px solid #d22e2e;border-radius:4px;padding:4px 4px 4px 4px;'>\
