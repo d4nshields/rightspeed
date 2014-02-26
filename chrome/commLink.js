@@ -26,7 +26,10 @@ function checkboxChanged() {
 $( function() {
   var html5enabled = false;
   chrome.extension.sendRequest( "getPREF", function( c) {
-    var k = c[0].value;
+
+    var k;
+    if( "undefined" != typeof c[0])
+      k = c[0].value;
     var prefs = ("undefined" != typeof k ? k.split( '&') : []);
 
     getPreference( function( any) {
