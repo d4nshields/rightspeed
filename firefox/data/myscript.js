@@ -4,14 +4,14 @@ var preferences = {
 var MIN = 0.5,
     MAX = 4.0;
 
-var style = document.createElement('link');
-style.rel = 'stylesheet';
-style.type = 'text/css';
-style.href = chrome.extension.getURL('jquery-ui.css');
-(document.head||document.documentElement).appendChild(style);
-
 
 if ("undefined" !== typeof chrome) {
+    var style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.type = 'text/css';
+    style.href = chrome.extension.getURL('jquery-ui.css');
+    (document.head||document.documentElement).appendChild(style);
+
     chrome.runtime.onMessage.addListener(
 
     function(message, sender, sendResponse) {
@@ -91,8 +91,13 @@ function spdrPositionerScheduler() {
 }
 
 $(function() {
-
+  Application.console.log( "banana myscript.js ENTERED");
+  if( /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch/.test( document.location.href)) {
+    console.log( "banana NOT youtube.com/watch url");
+    return;
+  }
     if ($('video').length < 1) {
+      Application.console.log( 'banana NO VIDEO ELEMENT FOUND');
         preferences['isActive'] = false;
         $("<div><h3>No HTML5 player element detected!</h3><p>You must set up Youtube<br> to use the HTML5 player.<br>Visit: <a href='http://youtube.com/html5'>Youtube html5 page.</a></div>").dialog({
             "title": "HTML5 video Element Not Found",
@@ -110,6 +115,7 @@ $(function() {
         });
         return;
     }
+    Application.console.log( "banana setting up SPDR");
     setupSPDR();
     $(window).resize(spdrPositionerScheduler);
     spdrPositionerScheduler();

@@ -1,16 +1,11 @@
 //
 
 function setPreference( pref, runFunc) {
-  chrome.storage.local.set( pref);
-  if( "undefined" != typeof runFunc) {
-    runFunc();
-  }
+  chrome.storage.local.set( pref, runFunc);
 }
 
 function getPreferences( runFunc) {
-  chrome.storage.local.get( null, function( items) {
-    runFunc( items);
-  });
+  chrome.storage.local.get( null, runFunc);
 }
 
 var MIN = 0.5,
@@ -29,13 +24,13 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 
 
 chrome.storage.onChanged.addListener( function( changes, namespace) {
-  getPreferences( function( prefs) {
-    if (!prefs.isActive) {
+  if( "undefined" != typeof changes.isActive) {
+    if (!changes.isActive.newValue) {
         $('#spdr').css('display', 'none');
     } else {
         $('#spdr').css('display', 'block');
     }
-  });
+  }
 });
 
 var spdrPosID;
@@ -107,7 +102,7 @@ function spdrPositioner( isRecursive) {
   $( function() {
     var numVideoElems = $('#player-api video').length;  // <= this isn't working
     if( !isRecursive && (numVideoElems < 1))
-      return spdrPositioner( true);
+      return spdrPositioner( true);             // check twice if video elems comes up zero
 
     setPreference( {
       'isActive': (numVideoElems > 0)
@@ -146,7 +141,7 @@ function spdrPositionerScheduler() {
     if ("undefined" != typeof spdrPosID) {
         window.clearTimeout(spdrPosID);
     }
-    spdrPosID = window.setInterval(spdrPositioner, 500);
+    spdrPosID = window.setInterval(spdrPositioner, 1000);
 }
 
 $(function() {
