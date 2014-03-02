@@ -39,8 +39,8 @@ function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
       var defaultSpeed = 1.0;
-      if( $('video').length > 0) {
-        defaultSpeed = $('video')[0].playbackRate;
+      if( $('#player-api video').length > 0) {
+        defaultSpeed = $('#player-api video')[0].playbackRate;
       }
       $("<div id='spdr' style='display:none;width:49px;height:510px;position:absolute;top:15px;\
         background-color: rgba( 200, 200, 200, 0.5);z-index:1999999999;\
@@ -78,7 +78,7 @@ function setupSPDR() {
         orientation: "vertical",
         slide: function(event, ui) {
           updateVideoElement(ui.value);
-          $('video').first().bind('play', function(e) {
+          $('#player-api video').first().bind('play', function(e) {
               updateVideoElement($("#spdr-slider").slider("value"));
           });
         }
@@ -88,8 +88,8 @@ function setupSPDR() {
 }
 
 function updateVideoElement(rate) {
-    if($("video").length > 0) {
-        $("video")[0].playbackRate = rate;
+    if($('#player-api video').length > 0) {
+        $('#player-api video')[0].playbackRate = rate;
     }
     $('#spdr #spdr-amount').css({
         'position': 'absolute',
@@ -98,50 +98,44 @@ function updateVideoElement(rate) {
 
 }
 
-function spdrPositioner( isRecursive) {
-  $( function() {
-    var numVideoElems = $('#player-api video').length;  // <= this isn't working
-    if( !isRecursive && (numVideoElems < 1))
-      return spdrPositioner( true);             // check twice if video elems comes up zero
+function spdrPositioner() {
+  var numVideoElems = $('#player-api video').length;  // <= this isn't working
 
-    setPreference( {
-      'isActive': (numVideoElems > 0)
-    }, function() {
-      getPreferences( function( prefs) {
-        if( $('#spdr').length < 1) {
-          setupSPDR();
-        }
-        if( $('video').length > 0) {
-          $('#spdr-overlay').remove();
-          if( $('#spdr-slider .ui-slider-handle').length > 0)
-            $('#spdr-slider').slider( "enable");
-          var playerApiPosition = $("#player-api").offset().left;
-          if (playerApiPosition < 0) {
-              return;
-          }
-          var left = $("#player-api").offset().left - 60;
-          if( $('#spdr').offset().left !== left)
-            $("#spdr").css({
-              "left": left + 'px',
-              "display": "block"
-            });
-          $("#spdr-slider").slider("value", $('video')[0].playbackRate);
-        } else {
-          if( $('#spdr-overlay').length < 1)
-            $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
-          if( $('#spdr-slider .ui-slider-handle').length > 0)
-            $('#spdr-slider').slider( "disable");
-        }
+  setPreference( {
+    'isActive': (numVideoElems > 0)
+  }, function() {});
+
+  if( $('#spdr').length < 1) {
+    setupSPDR();
+  }
+  if( $('#player-api video').length > 0) {
+    $('#spdr-overlay').remove();
+    if( $('#spdr-slider .ui-slider-handle').length > 0)
+      $('#spdr-slider').slider( "enable");
+    var playerApiPosition = $("#player-api").offset().left;
+    if (playerApiPosition < 0) {
+        return;
+    }
+    var left = $("#player-api").offset().left - 60;
+    if( $('#spdr').offset().left !== left)
+      $("#spdr").css({
+        "left": left + 'px',
+        "display": "block"
       });
-    });
-  });
+    $("#spdr-slider").slider("value", $('#player-api video')[0].playbackRate);
+  } else {
+    if( $('#spdr-overlay').length < 1)
+      $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
+    if( $('#spdr-slider .ui-slider-handle').length > 0)
+      $('#spdr-slider').slider( "disable");
+  }
 }
 
 function spdrPositionerScheduler() {
     if ("undefined" != typeof spdrPosID) {
         window.clearTimeout(spdrPosID);
     }
-    spdrPosID = window.setInterval(spdrPositioner, 1000);
+    spdrPosID = window.setInterval(spdrPositioner, 500);
 }
 
 $(function() {
@@ -160,7 +154,7 @@ $(function() {
       }
       p['html5enabled'] = html5enabled;
 
-      p['isActive']  = ($('.html5-video-container').length > 0);
+      p['isActive']  = ($('#player-api video').length > 0);
 
       setPreference( p, function() {
         setupSPDR();
@@ -170,7 +164,7 @@ $(function() {
     });
   });
 
-    //var pbRate = document.getElementsByTagName('video')[0].playbackRate;
+    //var pbRate = document.getElementsByTagName('#player-api video')[0].playbackRate;
     //updateVideoElement(pbRate);
     //$("#spdr #spdr-slider").slider("value", pbRate);
   var _gaq = _gaq || [];
