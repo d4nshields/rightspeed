@@ -23,15 +23,15 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 (document.head||document.documentElement).appendChild(style);
 
 
-chrome.storage.onChanged.addListener( function( changes, namespace) {
-  if( "undefined" != typeof changes.isActive) {
-    if (!changes.isActive.newValue) {
-        $('#spdr').css('display', 'none');
-    } else {
-        $('#spdr').css('display', 'block');
-    }
-  }
-});
+//chrome.storage.onChanged.addListener( function( changes, namespace) {
+//  if( "undefined" != typeof changes.isActive) {
+//    if (changes.isActive.newValue) {
+//        $('#spdr').css('display', 'none');
+//    } else {
+//        $('#spdr').css('display', 'block');
+//    }
+//  }
+//});
 
 var spdrPosID;
 
