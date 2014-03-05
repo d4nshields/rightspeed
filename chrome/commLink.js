@@ -17,12 +17,6 @@ function getPreference( runFunc) {
     })
 }
 
-function checkboxChanged() {
-    setPreference( {
-        'isActive': $('input[name=isActive]').prop('checked')
-    });
-}
-
 $( function() {
   var html5enabled = false;
   chrome.extension.sendRequest( "getPREF", function( c) {
@@ -43,8 +37,6 @@ $( function() {
 
       setPreference( any, function() {});
 
-      $('input[name=isActive]').prop( 'checked', any.isActive);
-      $('label[for=isActive]').removeClass( 'disabled');
       if( !any.html5enabled) {
         $('#html5enabled-message').html( "<blockquote style='text-align:justify;line-height:7mm;'>\
           YouTube HTML5 Player Status:<img src='xcheck.png' style='height:6.5mm;vertical-align:bottom;'><br><b>YouTube prefers to use the Flash player when unconfigured.</b>\
@@ -60,7 +52,6 @@ $( function() {
       $('#spdr-popup-youtube').click( function() {
         chrome.tabs.create({url: $(this).attr('href')});
       });
-      $('input[name=isActive]').change( checkboxChanged);    
     });
   });
 
