@@ -66,8 +66,9 @@ function setupSPDR() {
       var $amounts = "";
       for (var i = 0; i < labels.length; i++) {
           var val = labels[i];
-          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="color:black;position:absolute;bottom:' + (1.5 + (96 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(1) + 'x--</span>';
+          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.5 + (96 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(1) + 'x--</span>';
       }
+      $amounts += '<span class="spdr-moving-label" style="position:absolute;"></span>';
       $('#spdr-col1').append($amounts);
 
       $("#spdr-slider").slider({
@@ -91,9 +92,9 @@ function updateVideoElement(rate) {
     if($('#player-api video').length > 0) {
         $('#player-api video')[0].playbackRate = rate;
     }
-    $('#spdr #spdr-amount').css({
+    $('#spdr .spdr-moving-label').html( ''+rate.toFixed(1) + 'x--').css({
         'position': 'absolute',
-        'bottom': $('#spdr .ui-slider-handle').css('bottom')
+        'bottom': 7+parseFloat( $('#spdr .ui-slider-handle').css('bottom'))+'px'
     });
 
 }
@@ -122,7 +123,7 @@ function spdrPositioner() {
         "left": left + 'px',
         "display": "block"
       });
-    $("#spdr-slider").slider("value", $('#player-api video')[0].playbackRate);
+    updateVideoElement( $('#player-api video')[0].playbackRate);
   } else {
     if( $('#spdr-overlay').length < 1)
       $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');

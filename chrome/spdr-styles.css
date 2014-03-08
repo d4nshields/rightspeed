@@ -4,3 +4,13 @@
   text-align: center;
 }
 
+#spdr .spdr-amount {
+	color: #333333;
+}
+#spdr .spdr-moving-label {
+	color: blue;
+}
+
+.ui-slider-handle {
+	border-color: blue !important;
+}
