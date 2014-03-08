@@ -34,14 +34,23 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 //});
 
 var spdrPosID;
+var defaultSpeed = 1.0;
 
 function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
-      var defaultSpeed = 1.0;
+
       if( $('#player-api video').length > 0) {
         defaultSpeed = $('#player-api video')[0].playbackRate;
       }
+
+      var params = document.location.href.slice(0).split("?")[1].split("&");
+      for( var i=0; i < params.length; i++) {
+        if( params[i].indexOf( 'RightSpeed=') === 0) {
+          defaultSpeed = +params[i].substr( 11);
+        }
+      }
+
       $("<div id='spdr' style='display:none;width:49px;height:510px;position:absolute;top:15px;\
         background-color: rgba( 200, 200, 200, 0.5);z-index:1999999999;\
         border:1px solid #d22e2e;border-radius:4px;padding:4px 4px 4px 4px;'>\
@@ -53,8 +62,8 @@ function setupSPDR() {
            <button id='spdr-reset' style='z-index:1999999999;position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
           </div>\
         </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
-            $("#spdr-slider").slider("value", 1.0);
-            updateVideoElement(1.0);
+            $("#spdr-slider").slider("value", defaultSpeed);
+            updateVideoElement(defaultSpeed);
             e.preventDefault();
         });
       // load the image(s)
@@ -66,16 +75,16 @@ function setupSPDR() {
       var $amounts = "";
       for (var i = 0; i < labels.length; i++) {
           var val = labels[i];
-          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.5 + (96 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(1) + 'x--</span>';
+          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.0 + (97 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(1) + 'x--</span>';
       }
-      $amounts += '<span class="spdr-moving-label" style="position:absolute;"></span>';
+      $amounts += '<span class="spdr-moving-label" style="position:absolute;">'+defaultSpeed.toFixed(1) + 'x--</span>';
       $('#spdr-col1').append($amounts);
 
       $("#spdr-slider").slider({
-        value: 1.0,
+        value: defaultSpeed,
         min: MIN,
         max: MAX,
-        step: 0.01,
+        step: 0.001,
         orientation: "vertical",
         slide: function(event, ui) {
           updateVideoElement(ui.value);
@@ -84,6 +93,7 @@ function setupSPDR() {
           });
         }
       });
+      updateVideoElement( defaultSpeed);
     }
   });
 }
@@ -94,7 +104,7 @@ function updateVideoElement(rate) {
     }
     $('#spdr .spdr-moving-label').html( ''+rate.toFixed(1) + 'x--').css({
         'position': 'absolute',
-        'bottom': 7+parseFloat( $('#spdr .ui-slider-handle').css('bottom'))+'px'
+        'bottom': (1.0 + (97 * (rate - MIN) / (MAX - MIN))) + '%'
     });
 
 }
