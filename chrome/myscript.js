@@ -40,11 +40,12 @@ function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
 
-      if( $('#player-api video').length > 0) {
+      if( $('#player-api video').length > 0) { 
         defaultSpeed = $('#player-api video')[0].playbackRate;
       }
 
-      var params = document.location.href.slice(0).split("?")[1].split("&");
+      var urlparts = document.location.href.slice(0).split("?");
+      var params = (urlparts ? urlparts[1].split("&") : []);
       for( var i=0; i < params.length; i++) {
         if( params[i].indexOf( 'RightSpeed=') === 0) {
           defaultSpeed = +params[i].substr( 11);
@@ -175,17 +176,5 @@ $(function() {
     });
   });
 
-    //var pbRate = document.getElementsByTagName('#player-api video')[0].playbackRate;
-    //updateVideoElement(pbRate);
-    //$("#spdr #spdr-slider").slider("value", pbRate);
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-48191515-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = 'https://ssl.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
 });
 
