@@ -101,13 +101,16 @@ function setupSPDR() {
 
 function updateVideoElement(rate) {
     if($('#player-api video').length > 0) {
-        $('#player-api video')[0].playbackRate = rate;
+        if( rate !== $('#player-api video')[0].playbackRate) {
+          console.log( 'trackEvent '+rate.toFixed(1));
+          _gaq.push(['_trackEvent', 'playbackRate='+rate.toFixed(1)]);
+          $('#player-api video')[0].playbackRate = rate;
+        }
     }
     $('#spdr .spdr-moving-label').html( ''+rate.toFixed(1) + 'x--').css({
         'position': 'absolute',
         'bottom': (1.0 + (97 * (rate - MIN) / (MAX - MIN))) + '%'
     });
-
 }
 
 function spdrPositioner() {

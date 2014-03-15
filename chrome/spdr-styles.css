@@ -14,3 +14,7 @@
 .ui-slider-handle {
 	border-color: blue !important;
 }
+
+#spdr #spdr-reset {
+	cursor: pointer;
+}
