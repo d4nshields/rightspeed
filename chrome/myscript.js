@@ -92,6 +92,10 @@ function setupSPDR() {
           $('#player-api video').first().bind('play', function(e) {
               updateVideoElement($("#spdr-slider").slider("value"));
           });
+        },
+        stop: function( event, ui) {
+          console.log( 'trackEvent '+ui.value.toFixed(1));
+          _gaq.push(['_trackEvent', 'playbackRate='+ui.value.toFixed(1)]);
         }
       });
       updateVideoElement( defaultSpeed);
@@ -102,8 +106,6 @@ function setupSPDR() {
 function updateVideoElement(rate) {
     if($('#player-api video').length > 0) {
         if( rate !== $('#player-api video')[0].playbackRate) {
-          console.log( 'trackEvent '+rate.toFixed(1));
-          _gaq.push(['_trackEvent', 'playbackRate='+rate.toFixed(1)]);
           $('#player-api video')[0].playbackRate = rate;
         }
     }
