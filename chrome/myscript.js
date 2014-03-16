@@ -47,8 +47,10 @@ function setupSPDR() {
       var urlparts = document.location.href.slice(0).split("?");
       var params = (urlparts ? urlparts[1].split("&") : []);
       for( var i=0; i < params.length; i++) {
-        if( (params[i].indexOf( 'RightSpeed=') === 0) || (params[i].indexOf( 'rightspeed:speed=') === 0)) {
+        if( (params[i].toLowerCase().indexOf( 'rightspeed=') === 0) || (params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0)) {
           defaultSpeed = +parseFloat( params[i].substr( 11));
+        } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
+          defaultSpeed = +parseFloat( params[i].substr( 17));
         }
       }
 
