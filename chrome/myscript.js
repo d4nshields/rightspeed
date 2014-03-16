@@ -44,15 +44,19 @@ function setupSPDR() {
         defaultSpeed = $('#player-api video')[0].playbackRate;
       }
 
-      var urlparts = document.location.href.slice(0).split("?");
-      var params = (urlparts ? urlparts[1].split("&") : []);
-      for( var i=0; i < params.length; i++) {
-        if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
-          defaultSpeed = +parseFloat( params[i].substr( 11));
-        } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
-          defaultSpeed = +parseFloat( params[i].substr( 17));
+      function getDefaultSpeed( defaultSpeed) {
+        var urlparts = document.location.href.slice(0).split("?");
+        var params = (urlparts ? urlparts[1].split("&") : []);
+        for( var i=0; i < params.length; i++) {
+          if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
+            defaultSpeed = +parseFloat( params[i].substr( 11));
+          } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
+            defaultSpeed = +parseFloat( params[i].substr( 17));
+          }
         }
+        return defaultSpeed;
       }
+      defaultSpeed = getDefaultSpeed( defaultSpeed);
 
       $("<div id='spdr' style='display:none;width:49px;height:510px;position:absolute;top:15px;\
         background-color: rgba( 200, 200, 200, 0.5);z-index:1999999999;\
@@ -65,6 +69,7 @@ function setupSPDR() {
            <button id='spdr-reset' style='z-index:1999999999;position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
           </div>\
         </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
+            defaultSpeed = getDefaultSpeed( defaultSpeed);
             $("#spdr-slider").slider("value", defaultSpeed);
             updateVideoElement(defaultSpeed);
             e.preventDefault();
@@ -96,11 +101,13 @@ function setupSPDR() {
           });
         },
         stop: function( event, ui) {
-          console.log( 'trackEvent '+ui.value.toFixed(1));
+          console.log( 'trackEvent playbackRate='+ui.value.toFixed(1));
           _gaq.push(['_trackEvent', 'playbackRate='+ui.value.toFixed(1)]);
+        },
+        create: function( event, ui) {
+          updateVideoElement( defaultSpeed);
         }
       });
-      updateVideoElement( defaultSpeed);
     }
   });
 }
@@ -115,6 +122,7 @@ function updateVideoElement(rate) {
         'position': 'absolute',
         'bottom': (1.0 + (97 * (rate - MIN) / (MAX - MIN))) + '%'
     });
+    $("#spdr-slider").slider("value", rate);
 }
 
 function spdrPositioner() {
@@ -141,7 +149,7 @@ function spdrPositioner() {
         "left": left + 'px',
         "display": "block"
       });
-    updateVideoElement( $('#player-api video')[0].playbackRate);
+    updateVideoElement( $("#spdr-slider").slider("value"));
   } else {
     if( $('#spdr-overlay').length < 1)
       $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
@@ -159,6 +167,7 @@ function spdrPositionerScheduler() {
 
 $(function() {
 
+  console.log( 'initializing RightSpeed');
   var html5enabled = false;
   chrome.extension.sendRequest( "getPREF", function( c) {
     var k = c[0].value;
