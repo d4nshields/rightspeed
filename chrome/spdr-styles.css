@@ -5,9 +5,11 @@
 }
 
 #spdr .spdr-amount {
+	font-size: 9px;
 	color: #666666;
 }
 #spdr .spdr-moving-label {
+	font-size: 9px;
 	color: blue;
 }
 
@@ -17,4 +19,39 @@
 
 #spdr #spdr-reset {
 	cursor: pointer;
+}
+
+.spdr-input {
+	font-size: 1.3em;
+	margin: 0;
+	padding: 5px 0 5px 10px;
+	width:800px;
+}
+
+.spdr-share-box {
+	border: 20px solid #333333;
+	position:absolute;
+	top:-200px;
+	left:58px;
+}
+
+#spdr .spdr-buttons .close_button {
+	position: absolute;
+	right: -13px;
+	top: -17px;
+	color: #d22e2e;
+	cursor: pointer;
+	text-align: center;
+}
+#spdr .spdr-buttons .addtime_button {
+	position: absolute;
+	left: 0px;
+	bottom: -19px;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	border: 1px solid #d22e2e;
+	border-radius: 3px;
+	padding: 1px;
+	background-color: #999999;
 }

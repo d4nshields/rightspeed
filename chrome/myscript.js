@@ -35,6 +35,43 @@ style.href = chrome.extension.getURL('spdr-styles.css');
 
 var spdrPosID;
 var defaultSpeed = 1.0;
+var timestampParam = undefined;
+
+function getYouTubeURL() {
+  var urlparts = document.location.href.slice(0).split("?");
+  var baseUrl = urlparts[0];
+  var params = (urlparts ? urlparts[1].split("&") : []);
+  var videoId = '';
+  for( var i=0; i < params.length; i++) {
+    if( params[i].toLowerCase().indexOf( 'v=') === 0) {
+      videoId = params[i].substr( 2);
+    } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
+      defaultSpeed = +parseFloat( params[i].substr( 17));
+    }
+  }
+  return baseUrl+'?v='+videoId;
+}
+function toMinSecs( secs) {
+  secs = Math.floor( secs);
+  var mins = Math.floor(secs / 60);
+  secs = secs % 60;
+  return mins+'m'+secs+'s'
+}
+function updateRightSpeedURL() {
+  try {
+    var ts_str = '';
+    if( "undefined" != typeof timestampParam) {
+      ts_str = '&t='+toMinSecs( timestampParam);
+    }
+    var newval = getYouTubeURL()+'&RightSpeed='+$("#spdr-slider").slider("value").toFixed(2)+'x'+ts_str;
+    if( newval != $('#spdr .spdr-share-box .spdr-input').val()) {
+      $('#spdr .spdr-share-box .spdr-input').val( newval);
+      $('#spdr .spdr-share-box .spdr-input').select();
+    }
+  } catch( exception) {
+    // not inited yet
+  }
+}
 
 function setupSPDR() {
   getPreferences( function( prefs) {
@@ -65,8 +102,14 @@ function setupSPDR() {
           <div id='spdr-col1' style='color:black;float:left;height:100%'>\
           </div>\
           <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
-          <div class='spdr-buttons' style='position:absolute;top:510px;left:1px;height:20px;width:55px;'>\
-           <button id='spdr-reset' style='z-index:1999999999;position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+          <div class='spdr-buttons' style='position:absolute;top:510px;left:-2px;height:20px;width:61px;'>\
+           <div class='spdr-share-button' style='float:left;border-radius: 100%;border: 1px solid #d22e2e;background-color: #999999;color:black;cursor:pointer;text-align:center;padding-top:1px;width:13px;height:14px;'>S</div>\
+           <div class='spdr-share-box' style='display:none;'>\
+            <input class='spdr-input'></input>\
+            <div class='close_button'>x</div>\
+            <div class='addtime_button'>Set Timestamp</div>\
+           </div>\
+           <button id='spdr-reset' style='z-index:1999999999;float:right;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
           </div>\
         </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
             defaultSpeed = getDefaultSpeed( defaultSpeed);
@@ -74,6 +117,32 @@ function setupSPDR() {
             updateVideoElement(defaultSpeed);
             e.preventDefault();
         });
+
+        $("#spdr .spdr-share-button").click( function(e) {
+          console.log( 'SHARE BUTTON CLICKED');
+          $('#spdr .spdr-share-box').css({
+            'display': 'block'
+          });
+
+          $('#spdr .spdr-share-box .spdr-input').bind( "focus", function() {
+            this.select();
+          });
+          $('#spdr .spdr-share-box .spdr-input').focus();
+          updateRightSpeedURL();
+        });
+        function hideShareBox() {
+          $('#spdr .spdr-share-box').css({
+            'display': 'none'
+          });
+        }
+
+        $('#player-api video').bind( "loadstart", hideShareBox);
+        $('#spdr .spdr-share-box .close_button').click( hideShareBox);
+        $('#spdr .spdr-share-box .addtime_button').click( function() {
+          timestampParam = $('#player-api video')[0].currentTime;
+          updateRightSpeedURL();
+        });
+
       // load the image(s)
       var imgURL = chrome.extension.getURL("stopwatch-top.png");
       $("#spdr #spdr-image").prop('src', imgURL);
@@ -83,9 +152,9 @@ function setupSPDR() {
       var $amounts = "";
       for (var i = 0; i < labels.length; i++) {
           var val = labels[i];
-          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.0 + (97 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(1) + 'x--</span>';
+          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.0 + (97 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(2) + 'x--</span>';
       }
-      $amounts += '<span class="spdr-moving-label" style="position:absolute;">'+defaultSpeed.toFixed(1) + 'x--</span>';
+      $amounts += '<span class="spdr-moving-label" style="position:absolute;">'+defaultSpeed.toFixed(2) + 'x--</span>';
       $('#spdr-col1').append($amounts);
 
       $("#spdr-slider").slider({
@@ -118,11 +187,19 @@ function updateVideoElement(rate) {
           $('#player-api video')[0].playbackRate = rate;
         }
     }
-    $('#spdr .spdr-moving-label').html( ''+rate.toFixed(1) + 'x--').css({
+    try {
+      if( rate !== $("#spdr-slider").slider("value"))
+        $("#spdr-slider").slider("value", rate);
+    } catch( exception) {
+      // not inited yet
+    }
+    if( rate < 0.5)
+      rate = 0.5;
+    $('#spdr .spdr-moving-label').html( ''+rate.toFixed(2) + 'x--').css({
         'position': 'absolute',
         'bottom': (1.0 + (97 * (rate - MIN) / (MAX - MIN))) + '%'
     });
-    $("#spdr-slider").slider("value", rate);
+    updateRightSpeedURL();
 }
 
 function spdrPositioner() {
@@ -149,13 +226,24 @@ function spdrPositioner() {
         "left": left + 'px',
         "display": "block"
       });
-    updateVideoElement( $("#spdr-slider").slider("value"));
+    if( "undefined" === typeof time_offset) {
+      time_offset = 0;
+    }
+    time_offset++;
+    var speed;
+    try {
+      speed = $("#spdr-slider").slider("value");
+    } catch( exception) {
+      // not inited yet
+    }
+    updateVideoElement( ( speed > 0 ? speed : 0));
   } else {
     if( $('#spdr-overlay').length < 1)
       $('#spdr').append( '<div id="spdr-overlay" style="position:absolute; top:0; left:-1px; width:59px;height:529px; background-color: rgba( 255,255,255,0.75)">');
     if( $('#spdr-slider .ui-slider-handle').length > 0)
       $('#spdr-slider').slider( "disable");
   }
+
 }
 
 function spdrPositionerScheduler() {
@@ -163,6 +251,10 @@ function spdrPositionerScheduler() {
         window.clearTimeout(spdrPosID);
     }
     spdrPosID = window.setInterval(spdrPositioner, 500);
+}
+
+function drainFunction( t) {
+   return t*t*t/10000;
 }
 
 $(function() {
