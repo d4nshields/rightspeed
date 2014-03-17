@@ -49,7 +49,8 @@ function getYouTubeURL() {
       defaultSpeed = +parseFloat( params[i].substr( 17));
     }
   }
-  return baseUrl+'?v='+videoId;
+  //return baseUrl+'?v='+videoId;
+  return 'http://youtu.be/'+videoId;
 }
 function toMinSecs( secs) {
   secs = Math.floor( secs);
@@ -63,7 +64,7 @@ function updateRightSpeedURL() {
     if( "undefined" != typeof timestampParam) {
       ts_str = '&t='+toMinSecs( timestampParam);
     }
-    var newval = getYouTubeURL()+'&RightSpeed='+$("#spdr-slider").slider("value").toFixed(2)+'x'+ts_str;
+    var newval = getYouTubeURL()+'?RightSpeed='+$("#spdr-slider").slider("value").toFixed(2)+'x'+ts_str;
     if( newval != $('#spdr .spdr-share-box .spdr-input').val()) {
       $('#spdr .spdr-share-box .spdr-input').val( newval);
       $('#spdr .spdr-share-box .spdr-input').select();
@@ -134,6 +135,7 @@ function setupSPDR() {
           $('#spdr .spdr-share-box').css({
             'display': 'none'
           });
+          timestampParam = undefined;
         }
 
         $('#player-api video').bind( "loadstart", hideShareBox);
