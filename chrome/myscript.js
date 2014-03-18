@@ -104,22 +104,21 @@ function setupSPDR() {
           </div>\
           <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
           <div class='spdr-buttons' style='position:absolute;top:510px;left:-2px;height:20px;width:61px;'>\
-           <div class='spdr-share-button' style='float:left;border-radius: 100%;border: 1px solid #d22e2e;background-color: #999999;color:black;cursor:pointer;text-align:center;padding-top:1px;width:13px;height:14px;'>S</div>\
+           <div class='share_button' >share</div>\
            <div class='spdr-share-box' style='display:none;'>\
             <input class='spdr-input'></input>\
             <div class='close_button'>x</div>\
             <div class='addtime_button'>Set Timestamp</div>\
            </div>\
-           <button id='spdr-reset' style='z-index:1999999999;float:right;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+           <button id='spdr-reset'>1.0</button>\
           </div>\
         </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
             defaultSpeed = getDefaultSpeed( defaultSpeed);
-            $("#spdr-slider").slider("value", defaultSpeed);
-            updateVideoElement(defaultSpeed);
+            updateVideoElement(1.0);
             e.preventDefault();
         });
 
-        $("#spdr .spdr-share-button").click( function(e) {
+        $("#spdr .spdr-buttons .share_button").click( function(e) {
           console.log( 'SHARE BUTTON CLICKED');
           $('#spdr .spdr-share-box').css({
             'display': 'block'
