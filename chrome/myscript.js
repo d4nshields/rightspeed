@@ -96,14 +96,12 @@ function setupSPDR() {
       }
       defaultSpeed = getDefaultSpeed( defaultSpeed);
 
-      $("<div id='spdr' style='display:none;width:49px;height:510px;position:absolute;top:15px;\
-        background-color: rgba( 200, 200, 200, 0.5);z-index:1999999999;\
-        border:1px solid #d22e2e;border-radius:4px;padding:4px 4px 4px 4px;'>\
-          <img id='spdr-image' style='position:absolute;top:-22px;left:0px;width:100%'>\
-          <div id='spdr-col1' style='color:black;float:left;height:100%'>\
+      $("<div id='spdr'>\
+          <img id='spdr-image' >\
+          <div class='spdr-col1' >\
           </div>\
-          <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
-          <div class='spdr-buttons' style='position:absolute;top:510px;left:-2px;height:20px;width:61px;'>\
+          <div id='spdr-slider' ></div>\
+          <div class='spdr-buttons' >\
            <div class='share_button' >share</div>\
            <div class='spdr-share-box' style='display:none;'>\
             <input class='spdr-input'></input>\
@@ -156,7 +154,7 @@ function setupSPDR() {
           $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.0 + (97 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(2) + 'x--</span>';
       }
       $amounts += '<span class="spdr-moving-label" style="position:absolute;">'+defaultSpeed.toFixed(2) + 'x--</span>';
-      $('#spdr-col1').append($amounts);
+      $('.spdr-col1').append($amounts);
 
       $("#spdr-slider").slider({
         value: defaultSpeed,
