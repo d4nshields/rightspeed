@@ -10,6 +10,8 @@ function getPreferences( runFunc) {
 
 var MIN = 0.5,
     MAX = 4.0;
+var slider_labels = [
+      0.5, 1, 2, 3, 4];
 
 var style = document.createElement('link');
 style.rel = 'stylesheet';
@@ -45,6 +47,8 @@ function getYouTubeURL() {
   for( var i=0; i < params.length; i++) {
     if( params[i].toLowerCase().indexOf( 'v=') === 0) {
       videoId = params[i].substr( 2);
+    } else if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
+      defaultSpeed = +parseFloat( params[i].substr( 11));
     } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
       defaultSpeed = +parseFloat( params[i].substr( 17));
     }
@@ -92,6 +96,14 @@ function setupSPDR() {
             defaultSpeed = +parseFloat( params[i].substr( 17));
           }
         }
+        if( defaultSpeed < MIN) {
+          MIN = defaultSpeed;
+          slider_labels.unshift( MIN);
+        }
+        if( defaultSpeed > MAX) {
+          MAX = defaultSpeed;
+          push( MAX);
+        }
         return defaultSpeed;
       }
       defaultSpeed = getDefaultSpeed( defaultSpeed);
@@ -102,13 +114,16 @@ function setupSPDR() {
           </div>\
           <div id='spdr-slider' ></div>\
           <div class='spdr-buttons' >\
-           <div class='share_button' >share</div>\
+            <div class='instant_replay_button' ></div>\
+            <div class='button_group' style='top:20px;left:-1px'>\
+               <div class='share_button' >share</div>\
+               <button id='spdr-reset'>1.0</button>\
+            </div>\
            <div class='spdr-share-box' style='display:none;'>\
             <input class='spdr-input'></input>\
             <div class='close_button'>x</div>\
             <div class='addtime_button'>Set Timestamp</div>\
            </div>\
-           <button id='spdr-reset'>1.0</button>\
           </div>\
         </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
             defaultSpeed = getDefaultSpeed( defaultSpeed);
@@ -128,6 +143,13 @@ function setupSPDR() {
           $('#spdr .spdr-share-box .spdr-input').focus();
           updateRightSpeedURL();
         });
+        $("#spdr .spdr-buttons .instant_replay_button").click( function(e) {
+          // rewind 4*playbackRate seconds and cut the speed by 1/2
+          $('#player-api video')[0].currentTime = $('#player-api video')[0].currentTime-4.0*$('#player-api video')[0].playbackRate;
+          var newspeed = ( $('#player-api video')[0].playbackRate*0.75 > 0.5 ? $('#player-api video')[0].playbackRate*0.75 : 0.5);
+          updateVideoElement( newspeed);
+          updateRightSpeedURL();
+        });
         function hideShareBox() {
           $('#spdr .spdr-share-box').css({
             'display': 'none'
@@ -143,15 +165,17 @@ function setupSPDR() {
         });
 
       // load the image(s)
-      var imgURL = chrome.extension.getURL("stopwatch-top.png");
-      $("#spdr #spdr-image").prop('src', imgURL);
+      $( function() {
+        var imgURL = chrome.extension.getURL("stopwatch-top.png");
+        $("#spdr #spdr-image").prop('src', imgURL);
+        var imgURL = chrome.extension.getURL("button_instant_replay.png");
+        $("#spdr .spdr-buttons .instant_replay_button").css('background-image', 'url('+imgURL+')');
+      });
       // add labels
-      var labels = [
-      0.5, 1, 2, 3, 4];
       var $amounts = "";
-      for (var i = 0; i < labels.length; i++) {
-          var val = labels[i];
-          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (1.0 + (97 * (val - MIN) / (MAX - MIN))) + '%">' + val.toFixed(2) + 'x--</span>';
+      for (var i = 0; i < slider_labels.length; i++) {
+          var val = slider_labels[i];
+          $amounts += '<span id="spdr-label' + i + '" class="spdr-amount" style="position:absolute;bottom:' + (98 * (val - MIN) / (MAX - MIN)) + '%">' + val.toFixed(2) + 'x--</span>';
       }
       $amounts += '<span class="spdr-moving-label" style="position:absolute;">'+defaultSpeed.toFixed(2) + 'x--</span>';
       $('.spdr-col1').append($amounts);
@@ -196,7 +220,7 @@ function updateVideoElement(rate) {
       rate = 0.5;
     $('#spdr .spdr-moving-label').html( ''+rate.toFixed(2) + 'x--').css({
         'position': 'absolute',
-        'bottom': (1.0 + (97 * (rate - MIN) / (MAX - MIN))) + '%'
+        'bottom': (98 * (rate - MIN) / (MAX - MIN)) + '%'
     });
     updateRightSpeedURL();
 }

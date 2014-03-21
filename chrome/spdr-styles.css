@@ -26,14 +26,16 @@
 }
 
 #spdr .spdr-col1 {
+	position: relative;
 	color:black;
 	float:left;
-	height:100%
+	height: 462px;
+	width: 32px;
 }
 
 #spdr #spdr-slider {
 	float:right;
-	height:502px;
+	height: 462px;
 	vertical-align:middle;
 }
 
@@ -67,10 +69,19 @@
 #spdr .spdr-buttons {
 	position:absolute;
 	z-index:1999999999;
-	top:512px;
+	top:478px;
 	left:-2px;
 	height:20px;
 	width:61px;
+}
+
+#spdr .spdr-buttons .instant_replay_button {
+	background-size: 52px 18px;
+	width: 52px;
+	height: 18px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
 }
 
 #spdr .spdr-buttons .close_button {
@@ -94,6 +105,10 @@
 	background-color: #999999;
 }
 
+#spdr .spdr-buttons .button_group {
+	position: relative;
+}
+
 #spdr .spdr-buttons .share_button {
 	float:left;
 	border-radius: 4px;
@@ -103,10 +118,10 @@
 	cursor:pointer;
 	text-align:center;
 	padding-top:4px;
-	width:25px;
-	height:11.363636px;
+	width:26px;
+	height:12px;
 	font-size: 8px;
-	margin-left: 6px;
+	margin-left: 5px;
 	font-weight: bold;
 	box-shadow: 0px 0px 4px #d22e2e;
 }
@@ -120,5 +135,6 @@
 	border-radius:4px;
 	margin-right: 6px;
 	box-shadow: 0px 0px 4px #d22e2e;
+	height: 18px;
 }
 
