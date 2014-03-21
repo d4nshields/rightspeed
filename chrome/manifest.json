@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "RightSpeed for YouTube",
-  "short_name": "rightspeed",
-  "description": "Slower or faster, watch Youtube videos at exactly the 'right speed'.",
+  "name": "RightSpeed Unstable for YouTube",
+  "short_name": "rightspdXXX",
+  "description": "Unstable version of RightSpeed for YouTube.",
   "version": "0.0.1.4",
 
   "icons": {
