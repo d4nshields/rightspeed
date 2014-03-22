@@ -4,14 +4,23 @@
         <script src="jquery-1.11.0.min.js"></script>
         <script src="commLink.js"></script>
         <style type='text/css'>
-        .disabled {
-color: #aaaaaa;
-        }
+@font-face {
+    font-family: BTTF;
+    src: url( BTTF.ttf);
+}
+.disabled {
+    color: #aaaaaa;
+}
         </style>
     </head>
     <body style="width: 4in;margin:1px;">
         <div id="wrapper" style='border: 1px solid #666666; border-radius: 8px;width:96%;height:100%;padding:0.06125in;'>
-            <img src="rightspeed-title.png" style='width:3in;'></img>
+
+            <div style='width:3in;font-size:2.5em;padding:16px 0 0 16px;'>
+            <img src='stopwatch-small-128.png' style='float:left; height: 2.0em;'>
+<p style='font-family: BTTF;letter-spacing:-0.15em;color:#4e98d9;margin: 0;'>RIGHT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;speed</p>
+            </div>
             <h4>RightSpeed for YouTube Preferences:</h4>
             <center>
                 <div id='html5enabled-message'></div>
