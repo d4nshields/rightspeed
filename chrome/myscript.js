@@ -145,7 +145,7 @@ function setupSPDR() {
         });
         $("#spdr .spdr-buttons .instant_replay_button").click( function(e) {
           // rewind 4*playbackRate seconds and cut the speed by 1/2
-          $('#player-api video')[0].currentTime = $('#player-api video')[0].currentTime-4.0*$('#player-api video')[0].playbackRate;
+          $('#player-api video')[0].currentTime = $('#player-api video')[0].currentTime-10.0*$('#player-api video')[0].playbackRate;
           var newspeed = ( $('#player-api video')[0].playbackRate*0.75 > 0.5 ? $('#player-api video')[0].playbackRate*0.75 : 0.5);
           updateVideoElement( newspeed);
           updateRightSpeedURL();
