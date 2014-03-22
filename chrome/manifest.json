@@ -16,7 +16,7 @@
     "scripts": ["background.js"]
   },
   "content_scripts": [{
-      "m   atches": ["*://*.youtube.com/*"],
+      "matches": ["*://*.youtube.com/*"],
       "js": ["jquery-1.11.0.min.js", "jquery-ui.js", "ga-config.js", "ga.js", "myscript.js"],
       "run_at": "document_end",
       "all_frames": true
@@ -38,7 +38,7 @@
     "*://*.youtube.com/*"
   ],
   "web_accessible_resources": [
-      "BTTF.ttf",
+      "BTTF.ttf", "stop-watch-icon.png",
       "jquery-ui.css", "spdr-styles.css", "jquery.min.js", "jquery-ui.js", "myscript.js", "commLink.js", 
       "stopwatch-top.png", "button_instant_replay.png",
       "images/*"
