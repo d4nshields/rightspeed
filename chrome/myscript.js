@@ -78,6 +78,26 @@ function updateRightSpeedURL() {
   }
 }
 
+function getDefaultSpeed( defaultSpeed) {
+  var urlparts = document.location.href.slice(0).split("?");
+  var params = (urlparts ? urlparts[1].split("&") : []);
+  for( var i=0; i < params.length; i++) {
+    if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
+      defaultSpeed = +parseFloat( params[i].substr( 11));
+    } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
+      defaultSpeed = +parseFloat( params[i].substr( 17));
+    }
+  }
+  if( defaultSpeed < MIN) {
+    MIN = defaultSpeed;
+    slider_labels.unshift( MIN);
+  }
+  if( defaultSpeed > MAX) {
+    MAX = defaultSpeed;
+    push( MAX);
+  }
+  return defaultSpeed;
+}
 function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
@@ -86,26 +106,6 @@ function setupSPDR() {
         defaultSpeed = $('#player-api video')[0].playbackRate;
       }
 
-      function getDefaultSpeed( defaultSpeed) {
-        var urlparts = document.location.href.slice(0).split("?");
-        var params = (urlparts ? urlparts[1].split("&") : []);
-        for( var i=0; i < params.length; i++) {
-          if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
-            defaultSpeed = +parseFloat( params[i].substr( 11));
-          } else if( params[i].toLowerCase().indexOf( 'rightspeed:speed=') === 0) {
-            defaultSpeed = +parseFloat( params[i].substr( 17));
-          }
-        }
-        if( defaultSpeed < MIN) {
-          MIN = defaultSpeed;
-          slider_labels.unshift( MIN);
-        }
-        if( defaultSpeed > MAX) {
-          MAX = defaultSpeed;
-          push( MAX);
-        }
-        return defaultSpeed;
-      }
       defaultSpeed = getDefaultSpeed( defaultSpeed);
 
       $("<div id='spdr'>\
