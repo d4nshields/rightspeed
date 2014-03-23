@@ -4,7 +4,7 @@
   "name": "RightSpeed for YouTube",
   "short_name": "rightspeed",
   "description": "Slower or faster, watch Youtube videos at exactly the 'right speed'.",
-  "version": "0.0.1.5",
+  "version": "0.0.1.6",
 
   "icons": {
       "16": "stopwatch-small-128.png",
