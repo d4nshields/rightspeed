@@ -4,7 +4,7 @@
   "name": "RightSpeed Unstable for YouTube",
   "short_name": "rightspdXXX",
   "description": "Unstable version of RightSpeed for YouTube.",
-  "version": "0.0.2.3",
+  "version": "0.0.2.4",
 
   "icons": {
       "16": "stopwatch-small-128.png",
