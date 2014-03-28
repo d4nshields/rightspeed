@@ -50,6 +50,7 @@
 
 .ui-slider-handle {
 	border-color: blue !important;
+	outline: 1px solid transparent;
 }
 
 .spdr-input {
