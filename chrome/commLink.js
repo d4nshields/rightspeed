@@ -19,7 +19,7 @@ function getPreference( runFunc) {
 
 $( function() {
   var html5enabled = false;
-  chrome.extension.sendRequest( "getPREF", function( c) {
+  chrome.extension.sendRequest( "getYoutubeCookies", function( c) {
 
     var k;
     if( "undefined" != typeof c[0])
