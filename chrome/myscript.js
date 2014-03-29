@@ -252,22 +252,18 @@ function spdrPositionerScheduler() {
     spdrPosID = window.setInterval(spdrPositioner, 500);
 }
 
-function drainFunction( t) {
-   return t*t*t/10000;
-}
-
 $(function() {
 
   console.log( 'initializing RightSpeed');
   var html5enabled = false;
-  chrome.extension.sendRequest( "getPREF", function( c) {
+  chrome.extension.sendRequest( "getYoutubeCookies", function( c) {
     var k = c[0].value;
     var prefs = ("undefined" != typeof k ? k.split( '&') : []);
 
     getPreferences( function( p) {
       for( var i=0; i<prefs.length; i++) {
         var pref = prefs[i];
-        if( pref.indexOf( 'f2=') == 0) {
+        if( pref.indexOf( 'f2=') === 0) {
           html5enabled = (pref.substr( 3, 1) & 4);
         }
       }
