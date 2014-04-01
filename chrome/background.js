@@ -5,3 +5,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
         });
     }
 });
+chrome.storage.sync.get( 'hasSeenIntro', function( items) {
+	if( !items['hasSeenIntro']) {
+		chrome.storage.sync.set( { 'hasSeenIntro': 'yep'}, function() {
+		});
+		chrome.tabs.create( {
+			url: 'https://github.com/d4nshields/rightspeed/blob/master/README.md'
+		});
+	}
+});
