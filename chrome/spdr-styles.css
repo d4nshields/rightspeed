@@ -10,7 +10,7 @@
 	width:49px;
 	height:510px;
 	position:absolute;
-	top:15px;
+	top:30px;
     background-color: rgba( 200, 200, 200, 0.5);
     z-index:1999999999;
     border:1px solid #d22e2e;
@@ -68,7 +68,7 @@
 #spdr .spdr-buttons {
 	position:absolute;
 	z-index:1999999999;
-	top:512px;
+	bottom:20px;
 	left:-2px;
 	height:20px;
 	width:61px;

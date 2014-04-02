@@ -212,6 +212,16 @@ function spdrPositioner() {
     setupSPDR();
   }
   if( $('#player-api video').length > 0) {
+    var widgetHeight = parseInt( $('#player-api video').css( 'height'));
+    $('#spdr').css( {
+      height: widgetHeight+'px'
+    });
+    $('#spdr #spdr-slider').css( {
+      height: (widgetHeight-50)+'px'
+    });
+    $('#spdr .spdr-col1').css( {
+      height: (widgetHeight-46)+'px'
+    });
     $('#spdr-overlay').remove();
     if( $('#spdr-slider .ui-slider-handle').length > 0)
       $('#spdr-slider').slider( "enable");
