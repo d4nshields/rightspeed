@@ -37,6 +37,10 @@ $( function() {
 
       setPreference( any, function() {});
 
+      var manifest = chrome.runtime.getManifest();
+      console.log( 'manifest.version='+manifest.version);
+      $('#version_string').html( 'Version: '+manifest.version);
+
       if( !any.html5enabled) {
         $('#html5enabled-message').html( "<blockquote style='text-align:justify;line-height:7mm;'>\
           YouTube HTML5 Player Status:<img src='xcheck.png' style='height:6.5mm;vertical-align:bottom;'><br><b>YouTube prefers to use the Flash player when unconfigured.</b>\
