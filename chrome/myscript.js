@@ -213,8 +213,12 @@ function spdrPositioner() {
     setupSPDR();
   }
   if( $('#player-api video').length > 0) {
-    var widgetHeight = parseInt( $('#player-api').css( 'height'))-25;
+    var position = $('#player-api').position();
+    var widgetHeight = parseInt( $('#player-api').css( 'height'))-27;
     $('#spdr').css( {
+      display: 'block',
+      top: (position.top+18)+'px',
+      left: (position.left-60)+'px',
       height: widgetHeight+'px',
       transition: '0.125s'
     });
@@ -233,16 +237,6 @@ function spdrPositioner() {
     if (playerApiPosition < 0) {
         return;
     }
-    var left = $("#player-api").offset().left - 60;
-    if( $('#spdr').offset().left !== left)
-      $("#spdr").css({
-        "left": left + 'px',
-        "display": "block"
-      });
-    if( "undefined" === typeof time_offset) {
-      time_offset = 0;
-    }
-    time_offset++;
     var speed;
     try {
       speed = $("#spdr-slider").slider("value");
