@@ -107,6 +107,7 @@ function setupSPDR() {
             <input class='spdr-input'></input>\
             <div class='close_button'>x</div>\
             <div class='addtime_button'>Set Timestamp</div>\
+            <div class='title_bar'>RIGHT SPEED</div>\
            </div>\
            <button id='spdr-reset'>1.0</button>\
           </div>\
@@ -212,15 +213,18 @@ function spdrPositioner() {
     setupSPDR();
   }
   if( $('#player-api video').length > 0) {
-    var widgetHeight = parseInt( $('#player-api video').css( 'height'));
+    var widgetHeight = parseInt( $('#player-api').css( 'height'))-25;
     $('#spdr').css( {
-      height: widgetHeight+'px'
+      height: widgetHeight+'px',
+      transition: '0.125s'
     });
     $('#spdr #spdr-slider').css( {
-      height: (widgetHeight-50)+'px'
+      height: (widgetHeight-50)+'px',
+      transition: '0.125s'
     });
     $('#spdr .spdr-col1').css( {
-      height: (widgetHeight-46)+'px'
+      height: (widgetHeight-46)+'px',
+      transition: '0.125s'
     });
     $('#spdr-overlay').remove();
     if( $('#spdr-slider .ui-slider-handle').length > 0)

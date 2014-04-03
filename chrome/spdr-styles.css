@@ -4,18 +4,30 @@
   text-align: center;
 }
 
+@font-face {
+    font-family: BTTF;
+    src: url( BTTF.ttf);
+}
 
 #spdr {
 	display:none;
 	width:49px;
 	height:510px;
 	position:absolute;
-	top:30px;
+	top:25px;
     background-color: rgba( 200, 200, 200, 0.5);
     z-index:1999999999;
     border:1px solid #d22e2e;
     border-radius:4px;
     padding:4px 4px 4px 1px;
+}
+
+#spdr .title_bar {
+	font-family: BTTF;
+	position: absolute;
+	top: -16px;
+	left: 0px;
+	color: #4e98d9;
 }
 
 #spdr-image {
