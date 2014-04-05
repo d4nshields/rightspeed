@@ -98,11 +98,12 @@
 
 #spdr .spdr-buttons .close_button {
 	position: absolute;
-	right: -13px;
-	top: -17px;
+	right: -17px;
+	top: -25px;
 	color: #d22e2e;
 	cursor: pointer;
 	text-align: center;
+	font-size: 2em;
 }
 #spdr .spdr-buttons .addtime_button {
 	position: absolute;
