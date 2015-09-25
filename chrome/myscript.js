@@ -124,6 +124,9 @@ function setupSPDR() {
 
         $("#spdr .spdr-buttons .share_button").click( function(e) {
           console.log( 'SHARE BUTTON CLICKED');
+          console.log( 'trackEvent share button');
+          _gaq.push(['_trackEvent', 'shareButton', 'clicked']);
+
           $('#spdr .spdr-share-box').css({
             'display': 'block'
           });
@@ -136,6 +139,10 @@ function setupSPDR() {
         });
         $("#spdr .spdr-buttons .instant_replay_button").click( function(e) {
           // rewind 4*playbackRate seconds and cut the speed by 1/2
+          // fire google amalytics for this!
+          console.log( 'trackEvent instant replay='+$('#player-api video')[0].playbackRate.toFixed(1));
+          _gaq.push(['_trackEvent', 'instantReplay', ''+$('#player-api video')[0].playbackRate.toFixed(1)]);
+
           $('#player-api video')[0].currentTime = $('#player-api video')[0].currentTime-10.0*$('#player-api video')[0].playbackRate;
           var newspeed = ( $('#player-api video')[0].playbackRate*0.75 > 0.5 ? $('#player-api video')[0].playbackRate*0.75 : 0.5);
           updateVideoElement( newspeed);
@@ -185,7 +192,7 @@ function setupSPDR() {
         },
         stop: function( event, ui) {
           console.log( 'trackEvent playbackRate='+ui.value.toFixed(1));
-          _gaq.push(['_trackEvent', 'playbackRate='+ui.value.toFixed(1)]);
+          _gaq.push(['_trackEvent', 'playbackRate', ''+ui.value.toFixed(1)]);
         },
         create: function( event, ui) {
           updateVideoElement( defaultSpeed);
