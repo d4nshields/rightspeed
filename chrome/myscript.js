@@ -1,3 +1,5 @@
+/* global chrome */
+
 //
 
 function setPreference( pref, runFunc) {
