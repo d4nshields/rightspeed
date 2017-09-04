@@ -48,7 +48,7 @@ function setupSPDR() {
     var isSpdr;
     if( "youtube" === prefs.site) {
       $docBase = $(document);
-      playFrame = $docBase.find('#player-api');
+      playFrame = $docBase.find('#player-container');
     } else if( "coursera" === prefs.site) {
       $docBase = $('iframe').contents();
       playFrame = $docBase.find( '#QL_player_container_first');
@@ -63,7 +63,7 @@ function setupSPDR() {
             </div>\
             <div id='spdr-slider' style='float:right;height:502px;vertical-align:middle;'></div>\
             <div class='spdr-buttons' style='position:absolute;top:510px;left:1px;height:20px;width:55px;'>\
-             <button id='spdr-reset' style='position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;'>RESET</button>\
+             <button id='spdr-reset' style='position:absolute;left:4px;background-color: #999999;border:1px solid #d22e2e;border-radius:4px;padding:0;'>RESET</button>\
             </div>\
           </div>").insertBefore( playFrame);
         // load the image(s)
@@ -120,7 +120,7 @@ function spdrPositioner() {
         $spdrBase.find('#spdr-slider').slider( "enable");
         //
         if( "youtube" === prefs.site) {
-          playFrame = $( '#player-api');
+          playFrame = $( '#player-container');
         } else {
           playFrame = $('iframe').contents().find( '#QL_player_container_first');
         }

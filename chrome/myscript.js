@@ -34,7 +34,7 @@ var timestampParam = undefined;
 function getYouTubeURL() {
   var urlparts = document.location.href.slice(0).split("?");
   var baseUrl = urlparts[0];
-  var params = (urlparts ? urlparts[1].split("&") : []);
+  var params = (urlparts.length > 1 ? urlparts[1].split("&") : []);
   var videoId = '';
   for( var i=0; i < params.length; i++) {
     if( params[i].toLowerCase().indexOf( 'v=') === 0) {
@@ -72,7 +72,7 @@ function updateRightSpeedURL() {
 
 function getDefaultSpeed( defaultSpeed) {
   var urlparts = document.location.href.slice(0).split("?");
-  var params = (urlparts ? urlparts[1].split("&") : []);
+  var params = (urlparts.length > 1 ? urlparts[1].split("&") : []);
   for( var i=0; i < params.length; i++) {
     if( params[i].toLowerCase().indexOf( 'rightspeed=') === 0) {
       defaultSpeed = +parseFloat( params[i].substr( 11));
@@ -94,8 +94,8 @@ function setupSPDR() {
   getPreferences( function( prefs) {
     if ($("#spdr").length < 1) {
 
-      if( $('#player-api video').length > 0) { 
-        defaultSpeed = $('#player-api video')[0].playbackRate;
+      if( $('#player-container video').length > 0) { 
+        defaultSpeed = $('#player-container video')[0].playbackRate;
       }
 
       defaultSpeed = getDefaultSpeed( defaultSpeed);
@@ -118,7 +118,7 @@ function setupSPDR() {
             <div class='title_bar'>RIGHT SPEED</div>\
            </div>\
           </div>\
-        </div>").insertBefore("#player-api").find("#spdr-reset").click(function(e) {
+        </div>").insertBefore("#player-container").find("#spdr-reset").click(function(e) {
             defaultSpeed = getDefaultSpeed( defaultSpeed);
             updateVideoElement(1.0);
             e.preventDefault();
@@ -142,11 +142,11 @@ function setupSPDR() {
         $("#spdr .spdr-buttons .instant_replay_button").click( function(e) {
           // rewind 4*playbackRate seconds and cut the speed by 1/2
           // fire google amalytics for this!
-          console.log( 'trackEvent instant replay='+$('#player-api video')[0].playbackRate.toFixed(1));
-          _gaq.push(['_trackEvent', 'instantReplay', ''+$('#player-api video')[0].playbackRate.toFixed(1)]);
+          console.log( 'trackEvent instant replay='+$('#player-container video')[0].playbackRate.toFixed(1));
+          _gaq.push(['_trackEvent', 'instantReplay', ''+$('#player-container video')[0].playbackRate.toFixed(1)]);
 
-          $('#player-api video')[0].currentTime = $('#player-api video')[0].currentTime-10.0*$('#player-api video')[0].playbackRate;
-          var newspeed = ( $('#player-api video')[0].playbackRate*0.75 > 0.5 ? $('#player-api video')[0].playbackRate*0.75 : 0.5);
+          $('#player-container video')[0].currentTime = $('#player-container video')[0].currentTime-10.0*$('#player-container video')[0].playbackRate;
+          var newspeed = ( $('#player-container video')[0].playbackRate*0.75 > 0.5 ? $('#player-container video')[0].playbackRate*0.75 : 0.5);
           updateVideoElement( newspeed);
           updateRightSpeedURL();
         });
@@ -157,10 +157,10 @@ function setupSPDR() {
           timestampParam = undefined;
         }
 
-        $('#player-api video').bind( "loadstart", hideShareBox);
+        $('#player-container video').bind( "loadstart", hideShareBox);
         $('#spdr .spdr-share-box .close_button').click( hideShareBox);
         $('#spdr .spdr-share-box .addtime_button').click( function() {
-          timestampParam = $('#player-api video')[0].currentTime;
+          timestampParam = $('#player-container video')[0].currentTime;
           updateRightSpeedURL();
         });
 
@@ -188,7 +188,7 @@ function setupSPDR() {
         orientation: "vertical",
         slide: function(event, ui) {
           updateVideoElement(ui.value);
-          $('#player-api video').first().bind('play', function(e) {
+          $('#player-container video').first().bind('play', function(e) {
               updateVideoElement($("#spdr-slider").slider("value"));
           });
         },
@@ -205,9 +205,9 @@ function setupSPDR() {
 }
 
 function updateVideoElement(rate) {
-    if($('#player-api video').length > 0) {
-        if( rate !== $('#player-api video')[0].playbackRate) {
-          $('#player-api video')[0].playbackRate = rate;
+    if($('#player-container video').length > 0) {
+        if( rate !== $('#player-container video')[0].playbackRate) {
+          $('#player-container video')[0].playbackRate = rate;
         }
     }
     try {
@@ -226,7 +226,7 @@ function updateVideoElement(rate) {
 }
 
 function spdrPositioner() {
-  var numVideoElems = $('#player-api video').length;  // <= this isn't working
+  var numVideoElems = $('#player-container video').length;  // <= this isn't working
 
   setPreference( {
     'isActive': (numVideoElems > 0)
@@ -235,9 +235,9 @@ function spdrPositioner() {
   if( $('#spdr').length < 1) {
     setupSPDR();
   }
-  if( $('#player-api video').length > 0) {
-    var position = $('#player-api').position();
-    var widgetHeight = parseInt( $('#player-api').css( 'height'))-27;
+  if( $('#player-container video').length > 0) {
+    var position = $('#player-container').position();
+    var widgetHeight = parseInt( $('#player-container').css( 'height'))-27;
     $('#spdr').css( {
       display: 'block',
       top: (position.top+18)+'px',
@@ -256,7 +256,7 @@ function spdrPositioner() {
     $('#spdr-overlay').remove();
     if( $('#spdr-slider .ui-slider-handle').length > 0)
       $('#spdr-slider').slider( "enable");
-    var playerApiPosition = $("#player-api").offset().left;
+    var playerApiPosition = $("#player-container").offset().left;
     if (playerApiPosition < 0) {
         return;
     }
@@ -300,7 +300,7 @@ $(function() {
       }
       p['html5enabled'] = html5enabled;
 
-      p['isActive']  = ($('#player-api video').length > 0);
+      p['isActive']  = ($('#player-container video').length > 0);
 
       setPreference( p, function() {
         setupSPDR();
