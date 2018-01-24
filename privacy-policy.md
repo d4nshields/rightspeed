@@ -30,4 +30,4 @@ We reserve the right to update or change our Privacy Policy at any time and you 
 
 ## Contact Information
 
-For any questions or concerns regarding the privacy policy, please send us an email using the following address:  Dan Shields <d4nshields@gmail.com>.
+For any questions or concerns regarding the privacy policy, please send us an email using the following address: <d4nshields@gmail.com>.
