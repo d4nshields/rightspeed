@@ -5,11 +5,11 @@ We, the authors of RightSpeed, take your privacy seriously. To better protect yo
 
 ## Collection of Routine Information
 
-This Chrome extension tracks basic information about their users through the use of Google Analytics.  This information is retained to provide us with an informed overview of the users of the extension and to enhance support.   This information is interpreted in the form of broad samples of data and is anonymised to the maximum extent applicable under the circumstances to protect the identity of individual users.
+This Chrome extension tracks basic information about users through the use of Google Analytics.  This information is retained to provide us with an informed overview of the users of the extension and to enhance support.   This information is interpreted in the form of broad samples of data and is anonymised to the maximum extent applicable under the circumstances to protect the identity of individual users.
 
 ## Cookies
 
-Where necessary, this extension uses cookies to store information about a visitor’s preferences in order to better serve the user and/or present the user with customized content.
+Where necessary, this extension uses cookies to store information about a visitor’s preferences in order to better serve the user and to present the user with customized content.
 
 ## Links to Third Party Websites
 
@@ -30,4 +30,4 @@ We reserve the right to update or change our Privacy Policy at any time and you 
 
 ## Contact Information
 
-For any questions or concerns regarding the privacy policy, please send us an email to d4nshields@gmail.com.
+For any questions or concerns regarding the privacy policy, please send us an email using the following address:  Dan Shields <d4nshields@gmail.com>.
