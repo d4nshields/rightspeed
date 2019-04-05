@@ -243,7 +243,7 @@ function spdrPositioner() {
         $('#spdr').css({
             display: 'block',
             top: (position.top + 18) + 'px',
-            left: (position.left - 60) + 'px',
+            left: (position.left - 56) + 'px',
             height: widgetHeight + 'px',
             transition: '0.125s'
         });
